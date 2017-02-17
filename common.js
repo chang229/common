@@ -125,13 +125,28 @@ function GetRequest(url) {
 }
 var type = GetRequest(location.search);
 if (type) {
-if (type['type'] == '0') {	//判断url参数值
-	$(".head_nev li").eq(0).addClass("current").siblings("li").removeClass("current");
-}else if(type['type'] == '1'){
-	$(".head_nev li").eq(1).addClass("current").siblings("li").removeClass("current");
-}else if(type['type'] == '2'){
-	$(".head_nev li").eq(2).addClass("current").siblings("li").removeClass("current");
-}else if(type['type'] == '3'){
-	$(".head_nev li").eq(3).addClass("current").siblings("li").removeClass("current");
-}
-}
+	if (type['type'] == '0') {	//判断url参数值
+		$(".head_nev li").eq(0).addClass("current").siblings("li").removeClass("current");
+	}else if(type['type'] == '1'){
+		$(".head_nev li").eq(1).addClass("current").siblings("li").removeClass("current");
+	}else if(type['type'] == '2'){
+		$(".head_nev li").eq(2).addClass("current").siblings("li").removeClass("current");
+	}else if(type['type'] == '3'){
+		$(".head_nev li").eq(3).addClass("current").siblings("li").removeClass("current");
+	}
+};
+
+
+/**
+ * 判断手机屏幕是横屏还是竖屏
+ * @param element
+ * @returns {*}
+ */
+window.addEventListener("onorientationchange" in window ? "orientationchange" : "resize", function() {
+	if (window.orientation === 180 || window.orientation === 0) { 
+	    alert('竖屏状态！');
+	} 
+	if (window.orientation === 90 || window.orientation === -90 ){ 
+	    alert('横屏状态！');
+	}  
+}, false); 

@@ -106,3 +106,32 @@ function getLastElement( element ){
 		return node;
 	};
 }
+
+/**
+ * 获取当前网页url链接所带的参数
+ * @param element
+ * @returns {*}
+ */
+function GetRequest(url) {
+	if (url.lastIndexOf('?') == 0) {
+		var str = url.substring(url.lastIndexOf('?') + 1, url.length);
+		var arr = str.split('&');
+		var parames = [];
+		for (var i = 0; i < arr.length; i++) {
+		 	parames[arr[i].split('=')[0]] = arr[i].split('=')[1];
+		}
+		return parames;
+	}
+}
+var type = GetRequest(location.search);
+if (type) {
+if (type['type'] == '0') {	//判断url参数值
+	$(".head_nev li").eq(0).addClass("current").siblings("li").removeClass("current");
+}else if(type['type'] == '1'){
+	$(".head_nev li").eq(1).addClass("current").siblings("li").removeClass("current");
+}else if(type['type'] == '2'){
+	$(".head_nev li").eq(2).addClass("current").siblings("li").removeClass("current");
+}else if(type['type'] == '3'){
+	$(".head_nev li").eq(3).addClass("current").siblings("li").removeClass("current");
+}
+}

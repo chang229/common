@@ -149,4 +149,16 @@ window.addEventListener("onorientationchange" in window ? "orientationchange" : 
 	if (window.orientation === 90 || window.orientation === -90 ){ 
 	    alert('横屏状态！');
 	}  
-}, false); 
+}, false);
+
+/**
+ * 封装自己的scroll函数 获取页面滚动的坐标
+ * @param element
+ * @returns {*}
+ */ 
+function scroll(){
+	return {
+		top:window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0 ,
+		left:window.pageXOffset || document.documentElement.scrollLeft || document.body.scrollLeft || 0
+	};
+};

@@ -175,3 +175,42 @@ function getStyle(obj,attr){
 		return obj.currentStyle[attr];
 	};
 };
+
+/**
+ * 封装自己的缓动函数库
+ * @param element
+ * @returns {*}
+ */ 
+function animate(obj,json,fn){
+	clearInterval(obj.timer);
+	obj.timer = setInterval(function(){
+		var flog = true ;
+		for( k in json ){
+			if( k === "zIndex" ){
+				obj.style[k] = json[k];
+			}else if( k === "opacity" ){
+				// 调用上面的获取计算后样式函数
+				var leader = getStyle(obj,k) * 100 ;
+				var step = ( json[k]*100 - leader ) / 10 ;
+				step = step > 0 ? Math.ceil( step ) : Math.floor( step ) ;
+				leader = ( leader + step ) / 100 ;
+				obj.style[k] = leader ;
+			}else{
+				var leader = parseInt( getStyle(obj,k) );
+				var step = ( json[k] - leader ) / 10 ;
+				step = step > 0 ? Math.ceil( step ) : Math.floor( step ) ;
+				leader = leader + step ;
+				obj.style[k] = leader + "px" ;
+			};
+			if( leader !== json[k] ){
+				flog = false ;
+			};
+		};
+		if( flog ){
+			clearInterval(obj.timer);
+			if( fn ){
+				fn();
+			};
+		};
+	},15);
+};

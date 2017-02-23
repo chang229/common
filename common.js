@@ -162,3 +162,16 @@ function scroll(){
 		left:window.pageXOffset || document.documentElement.scrollLeft || document.body.scrollLeft || 0
 	};
 };
+
+/**
+ * 封装自己的getStyle函数 解决计算后样式的兼容问题
+ * @param element
+ * @returns {*}
+ */ 
+function getStyle(obj,attr){
+	if( window.getComputedStyle ){
+		return window.getComputedStyle(obj,null)[attr];
+	}else{
+		return obj.currentStyle[attr];
+	};
+};

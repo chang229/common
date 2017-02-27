@@ -193,8 +193,8 @@ function animate(obj,json,fn){
 				var leader = getStyle(obj,k) * 100 ;
 				var step = ( json[k]*100 - leader ) / 10 ;
 				step = step > 0 ? Math.ceil( step ) : Math.floor( step ) ;
-				leader = ( leader + step ) / 100 ;
-				obj.style[k] = leader ;
+				leader = leader + step ;
+				obj.style[k] = leader / 100 ;
 			}else{
 				var leader = parseInt( getStyle(obj,k) );
 				var step = ( json[k] - leader ) / 10 ;

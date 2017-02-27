@@ -214,3 +214,15 @@ function animate(obj,json,fn){
 		};
 	},15);
 };
+
+/**
+ * 获取窗口可视宽度和高度
+ * @param element
+ * @returns {*}
+ */ 
+function client(){
+	return {
+		width:window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth || 0 ,
+		height:window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight || 0
+	};
+};

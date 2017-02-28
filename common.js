@@ -226,3 +226,10 @@ function client(){
 		height:window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight || 0
 	};
 };
+
+/**
+ * 使文字不可被选中
+ * @param element
+ * @returns {*}
+ */ 
+window.getSelection ? window.getSelection().removeAllRanges() : document.selection.empty();

@@ -227,7 +227,7 @@ function client(){
  * @returns {*}
  */ 
 function getSelect(){
-	return window.getSelection ? window.getSelection().removeAllRanges() : document.selection.empty();
+	window.getSelection ? window.getSelection().removeAllRanges() : document.selection.empty();
 };
 
 /**
@@ -259,3 +259,34 @@ function removeEvent(element,eventName,listener){
 		element["on" + eventName] = null;
 	}
 };
+
+/**
+ * 封装 兼容所有浏览器的event事件对象的函数
+ * @param element
+ * @returns {*}
+ */
+var eventUtils = {
+	// 获取event对象
+	getEvent:function(event){
+		return event || window.event;
+	},
+	// 获取在页面上的坐标
+	getPageX:function(event){
+		return event.pageX || event.clientX + document.documentElement.scrollLeft;
+	},
+	getPageY:function(event){
+		return event.pageY || event.clientY + document.documentElement.scrollTop;
+	},
+	// 阻止冒泡事件
+	stopPropagation:function(event){
+		if( event.stopPropagation ){
+			event.stopPropagation();
+		}else{
+			event.cancelBubble = true;
+		};
+	},
+	// 获取当前事件目标
+	getTarget:function(event){
+		return event.target || event.srcElement;
+	}
+}

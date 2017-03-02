@@ -76,12 +76,6 @@ function getFirstElement( element ){
 	if( element.firstElementChild ){
 		return element.firstElementChild;
 	}else{
-		/*var child = element.childNodes;
-		for( i = 0 ; i < child.length ; i++ ){
-			if( child[i].nodeType === 1 ){
-				return child[i];
-			}
-		}*/
 		var node = element.firstChild;
 		while( node && node.nodeType != 1 ){
 			node = node.nextSibling;
@@ -232,4 +226,36 @@ function client(){
  * @param element
  * @returns {*}
  */ 
-window.getSelection ? window.getSelection().removeAllRanges() : document.selection.empty();
+function getSelect(){
+	return window.getSelection ? window.getSelection().removeAllRanges() : document.selection.empty();
+};
+
+/**
+ * 封装 兼容所有浏览器的添加事件的函数
+ * @param element
+ * element要绑定事件的元素对象 eventName是字符串而且不加on listener事件处理函数
+ */
+function addEvent(element,eventName,listener){
+	if( element.addEventListener ){
+		element.addEventListener(eventName, listener, false);
+	}else if( element.attachEvent ){
+		element.attachEvent("on" + eventName , listener);
+	}else{
+		element["on" + eventName] = listener;
+	}
+};
+
+/**
+ * 封装 兼容所有浏览器的移除事件的函数
+ * @param element
+ * element要绑定事件的元素对象 eventName是字符串而且不加on listener事件处理函数
+ */
+function removeEvent(element,eventName,listener){
+	if( element.removeEventListener ){
+		element.removeEventListener(eventName, listener, false);
+	}else if( event.detachEvent ){
+		element.detachEvent("on" + eventName,listener);
+	}else{
+		element["on" + eventName] = null;
+	}
+};

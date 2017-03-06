@@ -290,3 +290,13 @@ var eventUtils = {
 		return event.target || event.srcElement;
 	}
 }
+
+/**
+ * 封装 trim方法去掉字符串两端的空格
+ * @param element
+ * @returns {*}
+ */
+function trim(str){
+	// 字符串的replace方法只能替换第一个，在正则后面加g(globe),开启全局模式，替换所有的空格
+	return str.replace(/^\s+|\s+$/g,"");
+}

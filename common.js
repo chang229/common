@@ -300,3 +300,19 @@ function trim(str){
 	// 字符串的replace方法只能替换第一个，在正则后面加g(globe),开启全局模式，替换所有的空格
 	return str.replace(/^\s+|\s+$/g,"");
 }
+
+
+/**
+ * 封装 创建xhr对象方法函数
+ * @param element
+ * @returns {*}
+ */
+function xhr(){
+	var xhr;
+	if( window.XMLHttpRequest ){
+		xhr = new XMLHttpRequest();
+	}else{
+		xhr = new ActiveXObject("Msxml2.XMLHTTP");
+	};
+	return xhr;
+};

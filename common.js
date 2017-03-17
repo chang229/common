@@ -318,63 +318,86 @@ function xhr(){
 };
 
 /**
- * 封装 AJAX方法函数
+ * 封装 AJAX方法函数 支持jsonp跨域
  * @param element
  * @returns {*}
  */
 function ajax(obj){
-	// 设置默认对象
-	var defares = {
+	// 设置默认参数
+	var defauls = {
 		type:"get",
 		url:"#",
 		data:{},
-		asynce:true,
 		dataType:"json",
-		success:function(data){console.log(data)}
+		asynce:true,
+		jsonp:"callback",
+		success:function(data){console.log(data);},
+		error:function(){console.log("error");}
 	};
-	// 根据传入的参数修改默认参数
+	// 根据传入参数修改默认参数
 	for( k in obj ){
-		defares[k] = obj[k];
+		defauls[k] = obj[k];
 	};
-	// 创建xhr对象
-	var xhr = null;
-	if( window.XMLHttpRequest ){
-		xhr = new XMLHttpRequest();
+	// data对象处理
+	var param = ""
+	for( attr in defauls.data ){
+		param += attr + "=" + defauls.data[attr] + "&";
+	};
+	param = encodeURI( param.substring(0,param.length-1) );
+	// 判断是jsonp跨域还是ajax异步请求
+	if( defauls.dataType == "jsonp" ){
+		// 设置自定义函数名
+		var cd = "commonjs" + ( "1.1.1" + Math.random() ).replace(/\D/g,"") + "_" + ( new Date().getTime() );
+		if( defauls.jsonpcallback ){
+			cd = defauls.jsonpcallback;
+		};
+		// 自定义函数供后台调用
+		window[cd] = function(data){
+			defauls.success(data);
+		}
+		var script = document.createElement("script");
+		script.src= defauls.url + "?" + defauls.jsonp + "=" + cd + "&" + param;
+		var head = document.getElementsByTagName("head")[0];
+		head.appendChild( script );
 	}else{
-		xhr = new ActiveXObject("Msxml2.XMLHTTP");
-	};
-	// 准备发送
-	var parma = "";
-	for( attr in defares.data ){
-		parma += attr + "=" + defares.data[attr] + "&";
-	};
-	parma = encodeURI( parma.substring(0,parma.length -1 ) );
-	if( defares.type == "get" ){
-		defares.url += "?" + parma;
-	};
-	xhr.open(defares.type,defares.url,defares.asynce);
-	// 发送请求
-	var data = null;
-	if( defares.type == "post" ){
-		data = parma;
-		xhr.setRequestHeader("Content-Type","Application/x-www-form-urlencoded");
-	};
-	xhr.send( data );
-	// 同步请求处理
-	if( !defares.asynce ){
-		if( defares.dataType == "json" ){
-			return JSON.parse( xhr.responseText );
+		// ajax异步请求
+		// 创建对象
+		var xhr = null;
+		if( window.XMLHttpRequest ){
+			xhr = new XMLHttpRequest();
+		}else{
+			xhr = new ActiveXObject("Msxml2.XMLHTTP");
 		};
-		return xhr.responseText;
-	};
-	// 异步请求处理服务器返回的数据
-	xhr.onreadystatechange = function(){
-		if( xhr.readyState == 4 && xhr.status == 200 ){
-			var data = xhr.responseText;
-			if( defares.dataType == "json" ){
-				data = JSON.parse( data );
+		// 准备发送
+		if( defauls.type == "get" ){
+			defauls.url += "?" + param;
+		};
+		xhr.open(defauls.type,defauls.url,defauls.asynce);
+		// 发送请求
+		var data = null;
+		if( defauls.type == "post" ){
+			data = param;
+			xhr.setRequestHeader("Content-Type","Application/x-www-form-urlencoded");
+		};
+		xhr.send( data );
+		// 判断是否是同步请求处理
+		if( !defauls.asynce ){
+			if( defauls.dataType == "json" ){
+				return JSON.parse( xhr.responseText );
 			};
-			defares.success(data);
+			return xhr.responseText;
 		};
-	};
-};
+		// 异步请求处理返回的数据
+		xhr.onreadystatechange = function(){
+			if( xhr.readyState == 4 && xhr.status == 200 ){
+				var data = xhr.responseText;
+				if( defauls.dataType == "json" ){
+					data = JSON.parse( data );
+				};
+				defauls.success( data );
+			}else{
+				defauls.error();
+			}
+		}
+	}
+}

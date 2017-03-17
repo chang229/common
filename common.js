@@ -1,4 +1,8 @@
 /**
+ * 工具库版本号
+ */
+var edition = "1.1.1";
+/**
  * 根据id获取元素
  * @param id
  * @returns {Element}
@@ -346,8 +350,8 @@ function ajax(obj){
 	param = encodeURI( param.substring(0,param.length-1) );
 	// 判断是jsonp跨域还是ajax异步请求
 	if( defauls.dataType == "jsonp" ){
-		// 设置自定义函数名
-		var cd = "commonjs" + ( "1.1.1" + Math.random() ).replace(/\D/g,"") + "_" + ( new Date().getTime() );
+		// 设置自定义函数名 模仿jquery设置函数名
+		var cd = "commonjs" + ( edition + Math.random() ).replace(/\D/g,"") + "_" + ( new Date().getTime() );
 		if( defauls.jsonpcallback ){
 			cd = defauls.jsonpcallback;
 		};

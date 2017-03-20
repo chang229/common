@@ -7,8 +7,91 @@ var edition = "1.1.1";
  * @param id
  * @returns {Element}
  */
-function $(id){
+function $(id) {
 	return document.getElementById(id);
+}
+
+/**
+ * 数组的拼接方法join()的方法原型
+ * @param element
+ * @returns {*}
+ */
+function join(arr, ele) {
+	var temp = arr[0];
+	for (i = 1; i < arr.length; i++) {
+		temp += ele + arr[i];
+	}
+	return temp;
+}
+
+/**
+ * 数组的倒序reverse()方法原型
+ * @param element
+ * @returns {*}
+ */
+function reverse(arr) {
+	for (i = 0; i < arr.length / 2; i++) {
+		var temp = arr[i];
+		arr[i] = arr[arr.length - 1 - i];
+		arr[arr.length - 1 - i] = temp;
+	};
+	return arr;
+}
+
+/**
+ * 数组的冒泡排序(升序)
+ * @param element
+ * @returns {*}
+ */
+function ascending(arr) {
+	for (i = 0; i < arr.length - 1; i++) {
+		var flog = true;
+		for (j = 0; j < arr.length - 1 - i; j++) {
+			if (arr[j] > arr[j + 1]) {
+				flog = false;
+				var temp = arr[j + 1];
+				arr[j + 1] = arr[j];
+				arr[j] = temp;
+			}
+		};
+		if (flog) {
+			break;
+		};
+	};
+	return arr;
+}
+
+/**
+ * 数组的去重
+ * @param element
+ * @returns {*}
+ */
+function remdup(arr) {
+	for (i = 0; i < arr.length - 1; i++) {
+		for (j = i + 1; j < arr.length; j++) {
+			if (arr[i] == arr[j]) {
+				arr.splice(j, 1);
+			};
+		};
+	};
+	return arr;
+};
+
+/**
+ * 查找数组中每一项出现的次数
+ * @param element
+ * @returns {*}
+ */
+function cishu(arr) {
+	var obj = {};
+	for (i = 0; i < arr.length; i++) {
+		if (obj[arr[i]]) {
+			obj[arr[i]]++;
+		} else {
+			obj[arr[i]] = 1;
+		}
+	}
+	return obj;
 }
 
 /**
@@ -16,12 +99,12 @@ function $(id){
  * @param element
  * @returns {*}
  */
-function getNextElement( element ){
-	if( element.nextElementSibling ){
+function getNextElement(element) {
+	if (element.nextElementSibling) {
 		return element.nextElementSibling;
-	}else{
+	} else {
 		var next = element.nextSibling;
-		while( next && next.nodeType != 1 ){
+		while (next && next.nodeType != 1) {
 			next = next.nextSibling;
 		};
 		return next;
@@ -33,12 +116,12 @@ function getNextElement( element ){
  * @param element
  * @returns {*}
  */
-function getPreviousElement( element ){
-	if( element.previousElementSibling ){
+function getPreviousElement(element) {
+	if (element.previousElementSibling) {
 		return element.previousElementSibling;
-	}else{
+	} else {
 		var previous = element.previousSibling;
-		while( previous && previous.nodeType != 1 ){
+		while (previous && previous.nodeType != 1) {
 			previous = previous.previousSibling;
 		};
 		return previous;
@@ -50,10 +133,10 @@ function getPreviousElement( element ){
  * @param element
  * @returns {*}
  */
-function getText( element ){
-	if( element.innerText ){
+function getText(element) {
+	if (element.innerText) {
 		return element.innerText;
-	}else{
+	} else {
 		return element.textContent;
 	};
 }
@@ -63,25 +146,25 @@ function getText( element ){
  * @param element
  * @param content
  */
- function setText( element,content ){
- 	if( element.innerText ){
- 		element.innerText = content;
- 	}else{
- 		element.textContent = content;
- 	};
- }
+function setText(element, content) {
+	if (element.innerText) {
+		element.innerText = content;
+	} else {
+		element.textContent = content;
+	};
+}
 
  /**
  * 获取第一个子元素的兼容函数
  * @param element
  * @returns {*}
  */
-function getFirstElement( element ){
-	if( element.firstElementChild ){
+function getFirstElement(element) {
+	if (element.firstElementChild) {
 		return element.firstElementChild;
-	}else{
+	} else {
 		var node = element.firstChild;
-		while( node && node.nodeType != 1 ){
+		while (node && node.nodeType != 1) {
 			node = node.nextSibling;
 		};
 		return node;
@@ -93,12 +176,12 @@ function getFirstElement( element ){
  * @param element
  * @returns {*}
  */
-function getLastElement( element ){
-	if( element.lastElementChild ){
+function getLastElement(element) {
+	if (element.lastElementChild) {
 		return element.lastElementChild;
-	}else{
+	} else {
 		var node = element.lastChild;
-		while( node && node.nodeType != 1 ){
+		while (node && node.nodeType != 1) {
 			node = node.previousSibling;
 		};
 		return node;
@@ -116,24 +199,16 @@ function GetRequest(url) {
 		var arr = str.split('&');
 		var parames = [];
 		for (var i = 0; i < arr.length; i++) {
-		 	parames[arr[i].split('=')[0]] = arr[i].split('=')[1];
+			parames[arr[i].split('=')[0]] = arr[i].split('=')[1];
 		}
 		return parames;
 	}
 }
 var type = GetRequest(location.search);
 if (type) {
-	if (type['type'] == '0') {	//判断url参数值
-		$(".head_nev li").eq(0).addClass("current").siblings("li").removeClass("current");
-	}else if(type['type'] == '1'){
-		$(".head_nev li").eq(1).addClass("current").siblings("li").removeClass("current");
-	}else if(type['type'] == '2'){
-		$(".head_nev li").eq(2).addClass("current").siblings("li").removeClass("current");
-	}else if(type['type'] == '3'){
-		$(".head_nev li").eq(3).addClass("current").siblings("li").removeClass("current");
+	if (type['type'] == '0') { //判断url参数值
 	}
 };
-
 
 /**
  * 判断手机屏幕是横屏还是竖屏
@@ -141,12 +216,12 @@ if (type) {
  * @returns {*}
  */
 window.addEventListener("onorientationchange" in window ? "orientationchange" : "resize", function() {
-	if (window.orientation === 180 || window.orientation === 0) { 
-	    alert('竖屏状态！');
-	} 
-	if (window.orientation === 90 || window.orientation === -90 ){ 
-	    alert('横屏状态！');
-	}  
+	if (window.orientation === 180 || window.orientation === 0) {
+		alert('竖屏状态！');
+	}
+	if (window.orientation === 90 || window.orientation === -90) {
+		alert('横屏状态！');
+	}
 }, false);
 
 /**
@@ -154,10 +229,10 @@ window.addEventListener("onorientationchange" in window ? "orientationchange" : 
  * @param element
  * @returns {*}
  */ 
-function scroll(){
+function scroll() {
 	return {
-		top:window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0 ,
-		left:window.pageXOffset || document.documentElement.scrollLeft || document.body.scrollLeft || 0
+		top: window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0,
+		left: window.pageXOffset || document.documentElement.scrollLeft || document.body.scrollLeft || 0
 	};
 };
 
@@ -166,10 +241,10 @@ function scroll(){
  * @param element
  * @returns {*}
  */ 
-function getStyle(obj,attr){
-	if( window.getComputedStyle ){
-		return window.getComputedStyle(obj,null)[attr];
-	}else{
+function getStyle(obj, attr) {
+	if (window.getComputedStyle) {
+		return window.getComputedStyle(obj, null)[attr];
+	} else {
 		return obj.currentStyle[attr];
 	};
 };
@@ -179,38 +254,38 @@ function getStyle(obj,attr){
  * @param element
  * @returns {*}
  */ 
-function animate(obj,json,fn){
+function animate(obj, json, fn) {
 	clearInterval(obj.timer);
-	obj.timer = setInterval(function(){
-		var flog = true ;
-		for( k in json ){
-			if( k === "zIndex" ){
+	obj.timer = setInterval(function() {
+		var flog = true;
+		for (k in json) {
+			if (k === "zIndex") {
 				obj.style[k] = json[k];
-			}else if( k === "opacity" ){
+			} else if (k === "opacity") {
 				// 调用上面的获取计算后样式函数
-				var leader = getStyle(obj,k) * 100 ;
-				var step = ( json[k]*100 - leader ) / 10 ;
-				step = step > 0 ? Math.ceil( step ) : Math.floor( step ) ;
-				leader = leader + step ;
-				obj.style[k] = leader / 100 ;
-			}else{
-				var leader = parseInt( getStyle(obj,k) );
-				var step = ( json[k] - leader ) / 10 ;
-				step = step > 0 ? Math.ceil( step ) : Math.floor( step ) ;
-				leader = leader + step ;
-				obj.style[k] = leader + "px" ;
+				var leader = getStyle(obj, k) * 100;
+				var step = (json[k] * 100 - leader) / 10;
+				step = step > 0 ? Math.ceil(step) : Math.floor(step);
+				leader = leader + step;
+				obj.style[k] = leader / 100;
+			} else {
+				var leader = parseInt(getStyle(obj, k));
+				var step = (json[k] - leader) / 10;
+				step = step > 0 ? Math.ceil(step) : Math.floor(step);
+				leader = leader + step;
+				obj.style[k] = leader + "px";
 			};
-			if( leader !== json[k] ){
-				flog = false ;
+			if (leader !== json[k]) {
+				flog = false;
 			};
 		};
-		if( flog ){
+		if (flog) {
 			clearInterval(obj.timer);
-			if( fn ){
+			if (fn) {
 				fn();
 			};
 		};
-	},15);
+	}, 15);
 };
 
 /**
@@ -218,10 +293,10 @@ function animate(obj,json,fn){
  * @param element
  * @returns {*}
  */ 
-function client(){
+function client() {
 	return {
-		width:window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth || 0 ,
-		height:window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight || 0
+		width: window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth || 0,
+		height: window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight || 0
 	};
 };
 
@@ -230,7 +305,7 @@ function client(){
  * @param element
  * @returns {*}
  */ 
-function getSelect(){
+function getSelect() {
 	window.getSelection ? window.getSelection().removeAllRanges() : document.selection.empty();
 };
 
@@ -239,12 +314,12 @@ function getSelect(){
  * @param element
  * element要绑定事件的元素对象 eventName是字符串而且不加on listener事件处理函数
  */
-function addEvent(element,eventName,listener){
-	if( element.addEventListener ){
+function addEvent(element, eventName, listener) {
+	if (element.addEventListener) {
 		element.addEventListener(eventName, listener, false);
-	}else if( element.attachEvent ){
-		element.attachEvent("on" + eventName , listener);
-	}else{
+	} else if (element.attachEvent) {
+		element.attachEvent("on" + eventName, listener);
+	} else {
 		element["on" + eventName] = listener;
 	}
 };
@@ -254,12 +329,12 @@ function addEvent(element,eventName,listener){
  * @param element
  * element要绑定事件的元素对象 eventName是字符串而且不加on listener事件处理函数
  */
-function removeEvent(element,eventName,listener){
-	if( element.removeEventListener ){
+function removeEvent(element, eventName, listener) {
+	if (element.removeEventListener) {
 		element.removeEventListener(eventName, listener, false);
-	}else if( event.detachEvent ){
-		element.detachEvent("on" + eventName,listener);
-	}else{
+	} else if (event.detachEvent) {
+		element.detachEvent("on" + eventName, listener);
+	} else {
 		element["on" + eventName] = null;
 	}
 };
@@ -271,26 +346,26 @@ function removeEvent(element,eventName,listener){
  */
 var eventUtils = {
 	// 获取event对象
-	getEvent:function(event){
+	getEvent: function(event) {
 		return event || window.event;
 	},
 	// 获取在页面上的坐标
-	getPageX:function(event){
+	getPageX: function(event) {
 		return event.pageX || event.clientX + document.documentElement.scrollLeft;
 	},
-	getPageY:function(event){
+	getPageY: function(event) {
 		return event.pageY || event.clientY + document.documentElement.scrollTop;
 	},
 	// 阻止冒泡事件
-	stopPropagation:function(event){
-		if( event.stopPropagation ){
+	stopPropagation: function(event) {
+		if (event.stopPropagation) {
 			event.stopPropagation();
-		}else{
+		} else {
 			event.cancelBubble = true;
 		};
 	},
 	// 获取当前事件目标
-	getTarget:function(event){
+	getTarget: function(event) {
 		return event.target || event.srcElement;
 	}
 }
@@ -300,9 +375,9 @@ var eventUtils = {
  * @param element
  * @returns {*}
  */
-function trim(str){
+function trim(str) {
 	// 字符串的replace方法只能替换第一个，在正则后面加g(globe),开启全局模式，替换所有的空格
-	return str.replace(/^\s+|\s+$/g,"");
+	return str.replace(/^\s+|\s+$/g, "");
 }
 
 
@@ -311,11 +386,11 @@ function trim(str){
  * @param element
  * @returns {*}
  */
-function xhr(){
+function xhr() {
 	var xhr;
-	if( window.XMLHttpRequest ){
+	if (window.XMLHttpRequest) {
 		xhr = new XMLHttpRequest();
-	}else{
+	} else {
 		xhr = new ActiveXObject("Msxml2.XMLHTTP");
 	};
 	return xhr;
@@ -326,82 +401,81 @@ function xhr(){
  * @param element
  * @returns {*}
  */
-function ajax(obj){
+function ajax(obj) {
 	// 设置默认参数
 	var defauls = {
-		type:"get",
-		url:"#",
-		data:{},
-		dataType:"json",
-		asynce:true,
-		jsonp:"callback",
-		success:function(data){console.log(data);},
-		error:function(){console.log("error");}
+		type: "get",
+		url: "#",
+		data: {},
+		dataType: "json",
+		asynce: true,
+		jsonp: "callback",
+		success: function(data) {
+			console.log(data);
+		}
 	};
 	// 根据传入参数修改默认参数
-	for( k in obj ){
+	for (k in obj) {
 		defauls[k] = obj[k];
 	};
 	// data对象处理
 	var param = ""
-	for( attr in defauls.data ){
+	for (attr in defauls.data) {
 		param += attr + "=" + defauls.data[attr] + "&";
 	};
-	param = encodeURI( param.substring(0,param.length-1) );
+	param = encodeURI(param.substring(0, param.length - 1));
 	// 判断是jsonp跨域还是ajax异步请求
-	if( defauls.dataType == "jsonp" ){
+	if (defauls.dataType == "jsonp") {
 		// 设置自定义函数名 模仿jquery设置函数名
-		var cd = "commonjs" + ( edition + Math.random() ).replace(/\D/g,"") + "_" + ( new Date().getTime() );
-		if( defauls.jsonpcallback ){
+		var cd = "commonjs" + (edition + Math.random()).replace(/\D/g, "") + "_" + (new Date().getTime());
+		if (defauls.jsonpcallback) {
 			cd = defauls.jsonpcallback;
 		};
 		// 自定义函数供后台调用
-		window[cd] = function(data){
+		window[cd] = function(data) {
 			defauls.success(data);
 		}
 		var script = document.createElement("script");
-		script.src= defauls.url + "?" + defauls.jsonp + "=" + cd + "&" + param;
+		script.src = defauls.url + "?" + defauls.jsonp + "=" + cd + "&" + param;
 		var head = document.getElementsByTagName("head")[0];
-		head.appendChild( script );
-	}else{
+		head.appendChild(script);
+	} else {
 		// ajax异步请求
 		// 创建对象
 		var xhr = null;
-		if( window.XMLHttpRequest ){
+		if (window.XMLHttpRequest) {
 			xhr = new XMLHttpRequest();
-		}else{
+		} else {
 			xhr = new ActiveXObject("Msxml2.XMLHTTP");
 		};
 		// 准备发送
-		if( defauls.type == "get" ){
+		if (defauls.type == "get") {
 			defauls.url += "?" + param;
 		};
-		xhr.open(defauls.type,defauls.url,defauls.asynce);
+		xhr.open(defauls.type, defauls.url, defauls.asynce);
 		// 发送请求
 		var data = null;
-		if( defauls.type == "post" ){
+		if (defauls.type == "post") {
 			data = param;
-			xhr.setRequestHeader("Content-Type","Application/x-www-form-urlencoded");
+			xhr.setRequestHeader("Content-Type", "Application/x-www-form-urlencoded");
 		};
-		xhr.send( data );
+		xhr.send(data);
 		// 判断是否是同步请求处理
-		if( !defauls.asynce ){
-			if( defauls.dataType == "json" ){
-				return JSON.parse( xhr.responseText );
+		if (!defauls.asynce) {
+			if (defauls.dataType == "json") {
+				return JSON.parse(xhr.responseText);
 			};
 			return xhr.responseText;
 		};
 		// 异步请求处理返回的数据
-		xhr.onreadystatechange = function(){
-			if( xhr.readyState == 4 && xhr.status == 200 ){
+		xhr.onreadystatechange = function() {
+			if (xhr.readyState == 4 && xhr.status == 200) {
 				var data = xhr.responseText;
-				if( defauls.dataType == "json" ){
-					data = JSON.parse( data );
+				if (defauls.dataType == "json") {
+					data = JSON.parse(data);
 				};
-				defauls.success( data );
-			}else{
-				defauls.error();
-			}
+				defauls.success(data);
+			};
 		}
 	}
 }

@@ -264,18 +264,20 @@ function animate(obj, json, fn) {
 			} else if (k === "opacity") {
 				// 调用上面的获取计算后样式函数
 				var leader = getStyle(obj, k) * 100;
-				var step = (json[k] * 100 - leader) / 10;
+				var target = json[k] * 100;
+				var step = (target - leader) / 10;
 				step = step > 0 ? Math.ceil(step) : Math.floor(step);
 				leader = leader + step;
 				obj.style[k] = leader / 100;
 			} else {
 				var leader = parseInt(getStyle(obj, k));
-				var step = (json[k] - leader) / 10;
+				var target = json[k];
+				var step = (target - leader) / 10;
 				step = step > 0 ? Math.ceil(step) : Math.floor(step);
 				leader = leader + step;
 				obj.style[k] = leader + "px";
 			};
-			if (leader !== json[k]) {
+			if (leader !== target) {
 				flog = false;
 			};
 		};

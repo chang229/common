@@ -382,6 +382,32 @@ function trim(str) {
 	return str.replace(/^\s+|\s+$/g, "");
 }
 
+/**
+ * 封装 找到字符串中某一字符串出现的所有位置
+ * @param element
+ * @returns {*}
+ */
+function index(src,attr){
+	var index = -1, arr = [];
+	do{
+		index = src.indexOf(attr,index+1);
+		arr.push(index);
+	}while(index != -1);
+	return arr.slice(0,arr.length-1);
+}
+
+/**
+ * 封装 替换所有的字符
+ * @param element
+ * @returns {*}
+ */
+function repl(src,attr,el){
+	while(src.indexOf(attr) != -1){
+		src = src.replace(attr,el);
+	};
+	return src;
+}
+
 
 /**
  * 封装 创建xhr对象方法函数

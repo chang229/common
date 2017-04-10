@@ -225,6 +225,46 @@ window.addEventListener("onorientationchange" in window ? "orientationchange" : 
 }, false);
 
 /**
+ * 判断是安卓手机还是苹果手机
+ * @param element
+ * @returns {*}
+ */
+function IsIos() {
+	var u = navigator.userAgent;
+	var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1; //android终端
+	var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
+	if (isAndroid) {
+		return console.log('android终端');
+	};
+	if (isiOS) {
+		return console.log('ios终端');
+	}
+}
+/**
+ * 判断是手机端还是PC端
+ * @param element
+ * @returns {*}
+ */
+function browserRedirect() {
+	var sUserAgent = navigator.userAgent.toLowerCase();
+	var bIsIpad = sUserAgent.match(/ipad/i) == "ipad";
+	var bIsIphoneOs = sUserAgent.match(/iphone os/i) == "iphone os";
+	var bIsMidp = sUserAgent.match(/midp/i) == "midp";
+	var bIsUc7 = sUserAgent.match(/rv:1.2.3.4/i) == "rv:1.2.3.4";
+	var bIsUc = sUserAgent.match(/ucweb/i) == "ucweb";
+	var bIsAndroid = sUserAgent.match(/android/i) == "android";
+	var bIsCE = sUserAgent.match(/windows ce/i) == "windows ce";
+	var bIsWM = sUserAgent.match(/windows mobile/i) == "windows mobile";
+	if (bIsIpad || bIsIphoneOs || bIsMidp || bIsUc7 || bIsUc || bIsAndroid || bIsCE || bIsWM) {
+		alert("你正在使用移动设备访问本站，确定后将跳转到移动端网站。");
+		window.location.href = "about:blank"; //请在此处填写移动端的网址
+	}else{
+		alert("你正在使用电脑访问本站，确定后将跳转到PC端网站。");
+		window.location.href = "about:blank"; //请在此处填写PC端的网址
+	};
+}
+
+/**
  * 封装自己的scroll函数 获取页面滚动的坐标
  * @param element
  * @returns {*}

@@ -240,12 +240,13 @@ function IsIos() {
 		return console.log('ios终端');
 	}
 }
+
 /**
  * 判断是手机端还是PC端
  * @param element
  * @returns {*}
  */
-function browserRedirect() {
+function browserRedirect(moubleUrl,pcUrl) {
 	var sUserAgent = navigator.userAgent.toLowerCase();
 	var bIsIpad = sUserAgent.match(/ipad/i) == "ipad";
 	var bIsIphoneOs = sUserAgent.match(/iphone os/i) == "iphone os";
@@ -256,13 +257,31 @@ function browserRedirect() {
 	var bIsCE = sUserAgent.match(/windows ce/i) == "windows ce";
 	var bIsWM = sUserAgent.match(/windows mobile/i) == "windows mobile";
 	if (bIsIpad || bIsIphoneOs || bIsMidp || bIsUc7 || bIsUc || bIsAndroid || bIsCE || bIsWM) {
-		alert("你正在使用移动设备访问本站，确定后将跳转到移动端网站。");
-		window.location.href = "about:blank"; //请在此处填写移动端的网址
+		window.location.href = moubleUrl; //请在此处填写移动端的网址
 	}else{
-		alert("你正在使用电脑访问本站，确定后将跳转到PC端网站。");
-		window.location.href = "about:blank"; //请在此处填写PC端的网址
+		window.location.href = pcUrl; //请在此处填写PC端的网址
 	};
 }
+
+/**
+ * 判断是否已经安装了APP
+ * @param element
+ * @returns {*}
+ */
+function IsApp() {
+	if (navigator.userAgent.match(/(iPhone|iPod|iPad);?/i)) {
+		window.location.href = "com.baidu.tieba://"; //ios app协议(如：com.baidu.tieba://)
+		window.setTimeout(function() {
+			window.location.href = "https://itunes.apple.com/cn/app/id477927812"; //跳转到App store
+		}, 2000)
+	};
+	if (navigator.userAgent.match(/android/i)) {
+		window.location.href = "com.baidu.tieba://app"; //android app协议(如：com.baidu.tieba://app)
+		window.setTimeout(function() {
+			window.location.href = "https://****.apk"; //android 下载地址
+		}, 2000)
+	};
+};
 
 /**
  * 封装自己的scroll函数 获取页面滚动的坐标

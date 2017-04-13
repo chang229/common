@@ -566,3 +566,19 @@ function ajax(obj) {
 		}
 	}
 }
+
+/**
+ * 获取位置信息
+ * @param element
+ * @returns {*}
+ */
+function getPosition() {
+	//调用获取位置信息对象方法,接受3个参数
+	//参数1：获取成功的回调函数
+	//参数2：获取失败的回调函数
+	//参数3：一些参数选项
+	window.navigator.geolocation.getCurrentPosition(function(position) {
+		console.log("longitude:" + position.coords.longitude); //经度
+		console.log("latitude:" +  position.coords.latitude); //纬度
+	});
+}

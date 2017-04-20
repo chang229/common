@@ -204,11 +204,12 @@ function GetRequest(url) {
 		return parames;
 	}
 }
-var type = GetRequest(location.search);
-if (type) {
-	if (type['type'] == '0') { //判断url参数值
-	}
-};
+// 调用方法
+// var type = GetRequest(location.search);
+// if (type) {
+// 	if (type['type'] == '0') { //判断url参数值
+// 	}
+// };
 
 /**
  * 判断手机屏幕是横屏还是竖屏
@@ -217,11 +218,11 @@ if (type) {
  */
 window.addEventListener("onorientationchange" in window ? "orientationchange" : "resize", function() {
 	if (window.orientation === 180 || window.orientation === 0) {
-		alert('竖屏状态！');
-	}
+		console.log('竖屏状态！');
+	};
 	if (window.orientation === 90 || window.orientation === -90) {
-		alert('横屏状态！');
-	}
+		console.log('横屏状态！');
+	};
 }, false);
 
 /**
@@ -234,10 +235,10 @@ function IsIos() {
 	var isAndroid = u.indexOf('Android') > -1 || u.indexOf('Adr') > -1; //android终端
 	var isiOS = !!u.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/); //ios终端
 	if (isAndroid) {
-		return console.log('android终端');
+		return 'android';
 	};
 	if (isiOS) {
-		return console.log('ios终端');
+		return 'ios';
 	}
 }
 
@@ -283,6 +284,22 @@ function IsApp() {
 	};
 };
 
+/**
+ * 判断是否在微信QQ微博中打开
+ * @param element
+ * @returns {*}
+ */
+ function check_wechat_browser() {
+ 	// 获取客户端对象
+ 	var ua = navigator.userAgent.toLowerCase();
+ 	if (ua.math(/MicroMessenger/i) == "micromessenger") {
+ 		return "weixin";
+ 	} else if (ua.math(/QQ/i) == "qq") {
+ 		return "qq";
+ 	} else if (ua.math(/WeiBo/i) == "weibo") {
+ 		return "weibo";
+ 	}
+ };
 /**
  * 封装自己的scroll函数 获取页面滚动的坐标
  * @param element

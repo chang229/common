@@ -585,3 +585,27 @@ function getPosition() {
 		console.log("latitude:" +  position.coords.latitude); //纬度
 	});
 };
+/**
+ * 移动端click事件有300ms的延迟
+ * 从touchstart到touchend结束所需事件小于click
+ * 所有封装tap事件优化用户体验
+ * @param tap
+ * @returns {*}
+ */
+function tap(ele, callback) {
+	var time = 0;
+	var moveTrue = false;
+	ele.addEventListener("touchstart", function() {
+		time = +new Date();
+	}, false);
+	ele.addEventListener("touchmove", function() {
+		moveTrue = true;
+	}, false);
+	ele.addEventListener("touchend", function() {
+		if (!moveTrue && (+new Date() - time) < 150) {
+			callback && callback();
+		};
+		time = 0;
+		moveTrue = false;
+	}, false);
+};

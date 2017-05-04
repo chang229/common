@@ -484,22 +484,6 @@ function repl(src,attr,el){
 	return src;
 }
 
-
-/**
- * 封装 创建xhr对象方法函数
- * @param element
- * @returns {*}
- */
-function xhr() {
-	var xhr;
-	if (window.XMLHttpRequest) {
-		xhr = new XMLHttpRequest();
-	} else {
-		xhr = new ActiveXObject("Msxml2.XMLHTTP");
-	};
-	return xhr;
-};
-
 /**
  * 封装 AJAX方法函数 支持jsonp跨域
  * @param element
@@ -594,8 +578,10 @@ function getPosition() {
 	//参数1：获取成功的回调函数
 	//参数2：获取失败的回调函数
 	//参数3：一些参数选项
+	//经度：position.coords.longitude
+	//纬度：position.coords.latitude
 	window.navigator.geolocation.getCurrentPosition(function(position) {
 		console.log("longitude:" + position.coords.longitude); //经度
 		console.log("latitude:" +  position.coords.latitude); //纬度
 	});
-}
+};

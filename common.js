@@ -292,11 +292,11 @@ function IsApp() {
  function check_wechat_browser() {
  	// 获取客户端对象
  	var ua = navigator.userAgent.toLowerCase();
- 	if (ua.math(/MicroMessenger/i) == "micromessenger") {
+ 	if (ua.match(/MicroMessenger/i) == "micromessenger") {
  		return "weixin";
- 	} else if (ua.math(/QQ/i) == "qq") {
+ 	} else if (ua.match(/QQ/i) == "qq") {
  		return "qq";
- 	} else if (ua.math(/WeiBo/i) == "weibo") {
+ 	} else if (ua.match(/WeiBo/i) == "weibo") {
  		return "weibo";
  	}
  };

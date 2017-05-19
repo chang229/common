@@ -326,6 +326,34 @@ function getStyle(obj, attr) {
 };
 
 /**
+ * 封装自己的css函数 为dom元素添加样式
+ * @param element
+ * @returns {*}
+ */ 
+function css(ele, obj) {
+	for (k in obj) {
+		ele.style[k] = obj[k];
+	};
+};
+
+/**
+ * 封装自己的clone函数 实现对象的深浅拷贝
+ * @param element
+ * @returns {*}
+ */
+function clone(obj,boolean){
+	var o = {};
+	for(k in obj){
+		if(boolean){
+			o[k] = typeof obj[k] == "object" ? clone(obj[k]) : obj[k];
+		}else{
+			o[k] = obj[k];
+		};
+	};
+	return o;
+}; 
+
+/**
  * 封装自己的缓动函数库
  * @param element
  * @returns {*}

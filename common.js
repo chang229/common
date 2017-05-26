@@ -354,6 +354,19 @@ function clone(obj,boolean){
 }; 
 
 /**
+ * 封装自己的Object.create()方法
+ * @param element
+ * @returns {*}
+ */
+if(!Object.create){
+	Object.create = function(obj){
+		function F(){};
+		F.prototype = obj;
+		return new F();
+	};
+};
+
+/**
  * 封装自己的缓动函数库
  * @param element
  * @returns {*}

@@ -12,6 +12,29 @@ function $(id) {
 }
 
 /**
+ * 根据css选择器获取元素，带有缓存功能
+ * @param 
+ * @returns {Element}
+ */
+var $ = (function(){
+	var length = 3,domList = {},arr = [],nodes;
+	return function( selector ){
+		if( domList[selector] ){
+			nodes = domList[selector];
+		}else{
+			nodes = document.querySelectorAll(selector);
+			arr.push(selector);
+			if( arr.length > length ){
+				var shift = arr.shift();
+				delete domList[shift];
+			};
+			domList[selector] = nodes;
+		};
+		return nodes;
+	};
+})();
+
+/**
  * 数组的拼接方法join()的方法原型
  * @param element
  * @returns {*}

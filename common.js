@@ -12,6 +12,69 @@ function $(id) {
 }
 
 /**
+ * 根据TagName获取元素
+ * @param tagname
+ * @returns {Element}
+ */
+function tagName(tagname,dom){
+	dom = dom || document;
+	return dom.getElementsByTagName(tagname)
+};
+
+/**
+ * 封装document.querySelectorAll()方法
+ * @param dom
+ * @returns {Element}
+ */
+function qs(selector){
+	return document.querySelectorAll(selector);
+};
+
+/**
+ * 封装each()方法
+ * @param 遍历数组，return false;
+ * @returns {Element}
+ */
+function isArrayLike(array){
+	var length = array && array.length;
+	return typeof length === "number" && length >= 0;
+};
+function each(array,callback){
+	var i,k;
+	if(isArrayLike(array)){
+		for(i = 0 ; i < array.length; i++){
+			if(callback.call(array[i],i,array[i]) === false){
+				break;
+			};
+		};
+	}else{
+		for(k in array){
+			if(callback.call(array[k],k,array[k]) === false){
+				break;
+			};
+		};
+	};
+};
+function map(array,callback){
+	var i,k,res=[],tmp;
+	if(isArrayLike(array)){
+		for(i = 0; i< array.length; i++){
+			tmp = callback(array[i],i);
+			if(tmp !== undefined){
+				res.push(tmp);
+			};
+		};
+	}else{
+		for(k in array){
+			tmp = callback(array[k],k);
+			if(tmp !== undefined){
+				res.push(tmp);
+			};
+		};
+	};
+};
+
+/**
  * 根据css选择器获取元素，带有缓存功能
  * @param 
  * @returns {Element}
